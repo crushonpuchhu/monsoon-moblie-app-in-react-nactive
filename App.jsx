@@ -14,10 +14,12 @@ import {
 import tw from 'twrnc';
 import Card from './src/Card';
 import Geolocation from 'react-native-geolocation-service';
+import formatAMPM from './src/ampm';
 
 function App() {
   const [wData, SetWeatherdata] = useState(null);
   const [wDataForcast, SetWeatherdataForcast] = useState([]);
+  const [ampm, Setampm] = useState(formatAMPM(new Date()));
 
 
   const Permission = async () => {
@@ -47,6 +49,7 @@ function App() {
     Permission();
     const time = setInterval(() => {
 
+      Setampm(formatAMPM(new Date()))
       Geolocation.getCurrentPosition(async (postion) => {
 
         try {
@@ -106,7 +109,7 @@ function App() {
             {wData !== null ? wData.name : "Serching..."}
           </Text>
           <Text style={tw`text-emerald-800 py-1 font-bold text-[15px]`}>
-            AM
+            {ampm.split("")[5].toUpperCase()}M
           </Text>
         </View>
 
